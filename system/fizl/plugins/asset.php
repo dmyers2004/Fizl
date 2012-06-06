@@ -96,6 +96,8 @@ class Plugin_asset extends Plugin {
 			return '<script type="text/javascript" src="'.$src.'"></script>';
 
 		}
+	}
+
 }
 
 /* End of file asset.php */
