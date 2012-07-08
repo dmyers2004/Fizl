@@ -22,9 +22,7 @@ class Plugin_php extends Plugin {
 		$this->CI = get_instance();
 
 		// Prep our content
-		$content = "<?php";
-		$content .= $this->tag_content;
-		$content .= "?>";
+		$content = '<?php' . $this->tag_content . '?>';
 
 		// Run our content through the parser
 		$parser = new Lex_Parser();
