@@ -307,11 +307,11 @@ class Plugin_nav extends Plugin {
 						array_pop($this->stack);
 			}
 					else
-					 {
+					{
 					$this->stack[] = $key;
 
 							// is it the current one?
-							if ($key == uri_string()) {
+							if ($key == $this->CI->uri->segment(1)) {
 
 								// get current_class parameter
 								$current_class = trim($this->get_param('current_class', 'current'));
