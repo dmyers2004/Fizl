@@ -16,12 +16,12 @@ class Plugin_asset extends Plugin {
 	function __construct()
 	{
 		parent::__construct();
-	
+
 		$this->CI->load->helper('html');
 	}
 
 	// --------------------------------------------------------------------------
-	
+
 	/**
 	 * Image link
 	 */
@@ -32,22 +32,22 @@ class Plugin_asset extends Plugin {
 					'/img/'.$this->get_param('file');
 
 		$properties = array('alt', 'id', 'class', 'width', 'height', 'title', 'rel');
-		
+
 		foreach($properties as $prop):
-		
+
 			if($this->get_param($prop) != ''):
-			
+
 				$image_properties[$prop] = $this->get_param($prop);
-			
+
 			endif;
-		
+
 		endforeach;
 
 		return img($image_properties);
 	}
 
 	// --------------------------------------------------------------------------
-	
+
 	/**
 	 * CSS link
 	 */
@@ -57,11 +57,23 @@ class Plugin_asset extends Plugin {
 					$this->CI->config->item('assets_folder').
 					'/css/'.$this->get_param('file');
 
-		return '<link rel="stylesheet" type="text/css" href="'.$src.'" />';
+		// Get HTML5 param or leave as it is
+		$html5 = $this->get_param('html5', 'false');
+
+		// Do it the HTML5 way?
+		if ($html5 == 'true') {
+
+			return '<link rel="stylesheet" href="'.$src.'">';
+
+		} else {
+
+			return '<link rel="stylesheet" type="text/css" href="'.$src.'" />';
+
+		}
 	}
 
 	// --------------------------------------------------------------------------
-	
+
 	/**
 	 * JS link
 	 */
@@ -71,9 +83,21 @@ class Plugin_asset extends Plugin {
 					$this->CI->config->item('assets_folder').
 					'/js/'.$this->get_param('file');
 
-		return '<script type="text/javascript" src="'.$src.'"></script>';
+		// Get HTML5 param or leave as it is
+		$html5 = $this->get_param('html5', 'false');
+
+		// Do it the HTML5 way?
+		if ($html5 == 'true') {
+
+			return '<script src="'.$src.'"></script>';
+
+		} else {
+
+			return '<script type="text/javascript" src="'.$src.'"></script>';
+
+		}
 	}
-	
+
 }
 
 /* End of file asset.php */

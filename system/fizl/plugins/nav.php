@@ -307,14 +307,42 @@ class Plugin_nav extends Plugin {
 						array_pop($this->stack);
 			}
 					else
-					 {
+					{
 					$this->stack[] = $key;
 
-							// is it the current one?
-							if ($key == uri_string()) {
+							// Check if we have segments (are not on home)
+							if ($this->CI->uri->segment_array()) {
 
-								// get current_class parameter
-								$current_class = trim($this->get_param('current_class', 'current'));
+								// Write segments array
+								$segments = $this->CI->uri->segment_array();
+
+								// Fix the array keys (start at 0)
+								$segments = array_values($segments);
+
+								// Check if we are in a folder's home
+								$total_segments = $this->CI->uri->total_segments();
+								$array_segments = count($this->stack);
+
+								if ($array_segments == $total_segments + 1) {
+
+									// Fix the array...
+									array_push($segments, 'index');
+
+								}
+
+							} else {
+
+								// So we are on home, fix some errors
+								$array_segments = 1;
+								$segments = array('index');
+
+							}
+
+							// compare the arrays to see if it's the current
+							if ($this->stack[$array_segments - 1] == $segments[$array_segments - 1]) {
+
+								// get current_class parameters
+								$current_class = $this->get_param('current_class', 'current');
 
 								$this->html .= "\t".'<li class="'. $current_class .'"><a href="'.site_url(implode('/', $this->stack)).'">'.$item.'</a></li>'."\n";
 
