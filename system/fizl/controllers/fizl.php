@@ -194,6 +194,28 @@ class Fizl extends CI_Controller {
 
 			$content = read_file($file_path);
 
+			/* start entry handler */
+			if (strpos($content,'<meta') !== false)
+			{
+				$content = preg_replace("/<meta[^>]*>/i", '', $content);
+			}
+		
+			$entries = get_meta_tags($file_path);
+			$this->vars = array_merge($this->vars,$entries);
+
+			$template_file = FCPATH.$this->config->item('assets_folder').'/templates/'.@$entries['template'];
+			
+			if (is_file($template_file))
+			{
+				$this->vars['content'] = $content;
+		
+				$parser = new Lex_Parser();
+				$parser->scope_glue(':');
+				$content = $parser->parse(file_get_contents($template_file), $this->vars, array($this->parse, 'callback'), true);
+			}
+			/* end entry handler */
+
+
 			// -------------------------------------
 			// Prep content by filetype
 			// -------------------------------------
