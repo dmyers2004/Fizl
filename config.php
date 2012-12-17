@@ -8,6 +8,8 @@
 $config['site_title']			= 'Fizl Example Site';
 $config['assets_folder']		= 'assets';
 $config['site_folder']			= 'content';
+$config['template_folder'] = '#templates';
+$config['embeds_folder'] = '#templates';
 $config['fizl_date_format']		= 'Y-m-d H:i:s';
 
 /**

@@ -161,7 +161,7 @@ class Fizl extends CI_Controller {
 
 		$template = FALSE;
 
-		$template_path = FCPATH.$this->config->item('site_folder').'/#templates/';
+		$template_path = FCPATH.$this->config->item('site_folder').'/'.$this->config->item('template_folder').'/';
 
 		if($is_home and is_file($template_path.'home.html')):
 
@@ -203,7 +203,7 @@ class Fizl extends CI_Controller {
 			$entries = get_meta_tags($file_path);
 			$this->vars = array_merge($this->vars,$entries);
 
-			$template_file = FCPATH.$this->config->item('site_folder').'/#templates/'.@$entries['template'];
+			$template_file = FCPATH.$this->config->item('site_folder').'/'.$this->config->item('template_folder').'/'.@$entries['template'];
 			
 			if (is_file($template_file))
 			{
