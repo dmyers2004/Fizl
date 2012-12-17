@@ -255,14 +255,19 @@ class Plugin_nav extends Plugin {
 				if (is_array($file))
 				{
 					$this->stack[] = $key;
-
-					$new_map[$key] = array_merge(array('_title' => $this->guess_name($key)), $this->_parse_map_row($map[$key]));
-
-					array_pop($this->stack);
+					if ($key{0} != '#')
+					{
+						$new_map[$key] = array_merge(array('_title' => $this->guess_name($key)), $this->_parse_map_row($map[$key]));
+	
+						array_pop($this->stack);
+					}
 				}
 				else
 				{
-					$new_map[$this->remove_extension($file)] = $this->guess_name($file);
+					if ($file{0} != '#')
+					{
+						$new_map[$this->remove_extension($file)] = $this->guess_name($file);
+					}
 				}
 			}
 
