@@ -162,7 +162,7 @@ class Plugin_nav extends Plugin {
 
 		$this->start = $start;
 
-		$map = directory_map(FCPATH.$this->CI->config->item('site_folder').'/'.$start, $depth);
+		$map = directory_map(FCPATH.$this->CI->config->item('site_folder').'/'.$this->CI->config->item('content_folder').'/'.$start, $depth);
 
 		if( ! $map) return NULL;
 

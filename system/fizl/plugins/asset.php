@@ -42,8 +42,63 @@ class Plugin_asset extends Plugin {
 			endif;
 
 		endforeach;
+		
+		/* is width or height set? */
+		if ((int)@$image_properties['width'] > 0 || (int)@$image_properties['height'] > 0) {
+			$original = FCPATH.$this->CI->config->item('assets_folder').'/img/'.$this->get_param('file');
+			$image_properties['src'] = $this->resize($original,(int)@$image_properties['width'],(int)@$image_properties['height']);
+		}
 
 		return img($image_properties);
+	}
+
+	private function resize($filename,$width,$height) {
+		/* is the image even there? */
+		if (!file_exists($filename)) {
+			return  $this->CI->config->item('base_url').$this->CI->config->item('assets_folder').'/img/img-not-found.gif';
+		}
+
+		/* does this image already exist? then just return it */
+		$path_info = pathinfo($filename);
+		
+		$new_name = $path_info['filename'].$width.'x'.$height.'.'.$path_info['extension'];
+		$final_name = $this->CI->config->item('base_url').$this->CI->config->item('assets_folder').'/img/'.$new_name;
+
+		if (file_exists($final_name)) return $final_name;
+		
+		$config['source_image']	= $filename;
+		$config['create_thumb'] = TRUE;
+		$config['maintain_ratio'] = TRUE;
+		if ($height > 0 && $width == 0) {
+			$config['master_dim'] = 'height';
+			$config['height']	= $height;
+			$config['width'] = 1;
+		}
+		if ($width > 0 && $height == 0) {
+			$config['master_dim'] = 'width';
+			$config['width'] = $width;
+			$config['height'] = 1;
+		}
+		if ($height > 0 && $width > 0) {
+			$config['width'] = $width;
+			$config['height']	= $height;
+			$config['master_dim'] = 'auto';
+		}
+		
+		$config['thumb_marker'] = $width.'x'.$height;
+
+		$new_image = $path_info['dirname'].'/'.$new_name;
+
+		$this->CI->load->library('image_lib', $config);
+
+		$this->CI->image_lib->resize();
+		
+		if ( ! $this->CI->image_lib->resize())
+		{
+			log_message('error', $this->CI->image_lib->display_errors());
+		}
+		
+		return $final_name;
 	}
 
 	// --------------------------------------------------------------------------

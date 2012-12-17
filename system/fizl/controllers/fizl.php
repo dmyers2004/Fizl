@@ -38,7 +38,8 @@ class Fizl extends CI_Controller {
 		// Site config load
 		// -------------------------------------
 
-		$raw_configs = require_once(FCPATH.'config.php');
+		//$raw_configs = require_once(FCPATH.'config.php');
+		$config = parse_ini_file(FCPATH.$this->config->item('site_folder').'/config.ini');
 
 		foreach($config as $key => $var)
 		{
@@ -67,7 +68,7 @@ class Fizl extends CI_Controller {
 		);
 
 		// Set the site folder as a constant
-		define('SITE_FOLDER', $this->config->item('site_folder'));
+		define('SITE_FOLDER', $this->config->item('site_folder').'/'.$this->config->item('content_folder'));
 
 		// -------------------------------------
 		// Look for page

@@ -59,7 +59,7 @@ class Parse {
 		// Find & Load Plugin Class
 		// ----------------------------
 		
-		$plugin_dirs = array(APPPATH.'plugins/', FCPATH.'addons/plugins/');
+		$plugin_dirs = array(APPPATH.'plugins/', FCPATH.'plugins/');
 		
 		// We can either have plugin folders or plugin files.
 		foreach ($plugin_dirs as $dir)
