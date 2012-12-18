@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
 	<base href="{{ base_url }}" />
-
-	<meta charset="utf-8">
-
+	<meta charset="UTF-8">
 	<title>{{ site_title }}</title>
-
-	{{ asset:css file="main.css" html5="true" }}
-
+	{{ asset:css file="style.css" html5="true" }}
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700' rel='stylesheet' type='text/css'>
 </head>
-
-<section id="wrap">
-
-<header>
-
-	<a href=""><h2>Fizl Example Site</h2></a>
-
-</header>
-
-<nav>
-
-{{ nav:auto }}
-
-</nav>
+<body>
+	<div class="background">
+		<div class="page">
+			<div class="logo">
+				<span>
+					<a href="/">
+					Project<br/>
+					Orange<br/>
+					Box
+					</a>
+				</span>
+			</div>
+			<div class="sidebar">
+				{{ nav:auto depth="1" }}
+				<div class="connect">
+					<a href="http://www.facebook.com/iceman1218" id="facebook">facebook</a>
+					<a href="https://twitter.com/redrubicon07" id="twitter">twitter</a>
+				</div>
+				<p class="footnote">
+					&#169; Copyright {{ current_year }}. <br> All rights reserved.
+				</p>
+			</div>
+			<div class="body">
+				<div class="content">

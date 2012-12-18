@@ -207,7 +207,7 @@ class Plugin_nav extends Plugin {
 		// it up into an array.
 		if (in_array('order.txt', $map))
 		{
-			$path = implode('/', array_merge(array(FCPATH.$this->CI->config->item('site_folder')), $this->stack));
+			$path = implode('/', array_merge(array(FCPATH.$this->CI->config->item('site_folder').'/'.$this->CI->config->item('content_folder')), $this->stack));
 
 			if (is_file($path.'/order.txt'))
 			{
@@ -344,7 +344,9 @@ class Plugin_nav extends Plugin {
 							}
 
 							// compare the arrays to see if it's the current
-							if ($this->stack[$array_segments - 1] == @$segments[$array_segments - 1]) {
+
+							$here = ($this->stack[$array_segments - 1] == '') ? 'index' : $this->stack[$array_segments - 1];
+							if ($here == @$segments[$array_segments - 1]) {
 
 								// get current_class parameters
 								$current_class = $this->get_param('current_class', 'current');

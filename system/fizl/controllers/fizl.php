@@ -64,7 +64,8 @@ class Fizl extends CI_Controller {
 			'current_year'	=> date('Y'),
 			'current_url'	=> current_url(),
 			'site_url'		=> site_url(),
-			'base_url'		=> $this->config->item('base_url')
+			'base_url'		=> $this->config->item('base_url'),
+			'site_title'	=> $this->config->item('site_title')
 		);
 
 		// Set the site folder as a constant
