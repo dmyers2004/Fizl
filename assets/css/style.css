@@ -154,7 +154,7 @@ p a:hover {
 }
 .content {
 	background:url(../img/separator.jpg) no-repeat right 18px;
-	padding: 20px;
+	padding: 32px;
 }
 .body ul {
 	list-style:none;
@@ -179,19 +179,13 @@ p a:hover {
 	margin:0 0 0 30px;
 	padding:44px 0 0;
 }
-.body ul li.first h3 a {
+.body h3 {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:25px;
 	color:#ff8a00;
-	text-decoration:none;
-	font-weight:normal;
-	line-height:30px;
-	letter-spacing:0.05em;
-	display:block;
-	margin:0;
 }
-.body ul li.first h3 a:hover {
-	color:#fdbe36;
+.body p {
+	line-height: 1.5;
 }
 .body ul li.first span {
 	font-family:Arial, Helvetica, sans-serif;
