@@ -41,9 +41,14 @@ $entries[] = array(
 	}
 
 	public function get_entry($file) {
-		$matches = array();
-		if (file_exists(SITE_FOLDER.$file)) $matches = get_meta_tags(SITE_FOLDER.$file);
-		return $matches;
+		if (file_exists(SITE_FOLDER.$file)) {
+			$content = file_get_contents(SITE_FOLDER.$file);
+			$CI = get_instance();
+			$CI->load->library('Entry');
+			$entry = $CI->entry->process($content);
+			return $entry['fields'];
+		}
+		return array();
 	}
 
 	public function get_list($folder,$hide,$show) {
