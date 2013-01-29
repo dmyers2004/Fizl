@@ -37,7 +37,7 @@ $entries[] = array(
 		$parser = new Lex_Parser();
 		$parser->scope_glue(':');
 
-		return $parser->parse($this->tag_content, array('records'=>$entries), array($this->CI->parse, 'callback'), true);
+		return $parser->parse('{{ records }}'.$this->tag_content.'{{ /records }}', array('records'=>$entries), array($this->CI->parse, 'callback'), true);
 	}
 
 	public function get_entry($file) {

@@ -33,15 +33,15 @@ class Fizl extends CI_Controller {
 		Lex_Autoloader::register();
 
 		$this->load->helper(array('file', 'url'));
-
+		
 		// -------------------------------------
 		// Site config load
 		// -------------------------------------
 
 		//$raw_configs = require_once(FCPATH.'config.php');
-		$config = parse_ini_file(FCPATH.$this->config->item('site_folder').'/config.ini');
+		$raw_configs = parse_ini_file(FCPATH.$this->config->item('site_folder').'/config.ini');
 
-		foreach($config as $key => $var)
+		foreach($raw_configs as $key => $var)
 		{
 			$this->config->set_item($key, $var);
 		}
@@ -199,39 +199,22 @@ class Fizl extends CI_Controller {
 			/* start entry handler */
 			$this->load->library('entry');
 			$entry = $this->entry->process($content);
-			$fields = $entry['fields'];
-			$content = $entry['content'];
+			$entry_fields = $entry['fields'];
+			$entry_content = $entry['content'];
 		
-			$this->vars = array_merge($this->vars,$fields);
+			$this->vars = array_merge($this->vars,$entry_fields);
 
-			$template_file = FCPATH.$this->config->item('site_folder').'/'.$this->config->item('template_folder').'/'.@$fields['template'];
+			$template_file = FCPATH.$this->config->item('site_folder').'/'.$this->config->item('template_folder').'/'.@$entry_fields['template'];
 			
 			if (is_file($template_file))
 			{
-				$this->vars['content'] = $content;
+				$this->vars['content'] = $entry_content;
 		
 				$parser = new Lex_Parser();
 				$parser->scope_glue(':');
 				$content = $parser->parse(file_get_contents($template_file), $this->vars, array($this->parse, 'callback'), true);
 			}
 			/* end entry handler */
-
-
-			// -------------------------------------
-			// Prep content by filetype
-			// -------------------------------------
-			// .md and .textile get formatted
-			// automatically.
-			// -------------------------------------
-
-			if ($file_ext == 'md')
-			{
-				$content = '{{ format }}'.$content.'{{ /format }}';
-			}
-			elseif( $file_ext == 'textile')
-			{
-				$content = '{{ format method="textile" }}'.$content.'{{ /format }}';
-			}
 
 			// -------------------------------------
 
@@ -244,12 +227,12 @@ class Fizl extends CI_Controller {
 			else
 			{
 				// If we have a template, let's be
-				// sneakty and add in the content
+				// sneaky and add in the content
 				// variable manually.
 				$template = str_replace(array('{{ content }}', '{{content}}'), $content, $template);
 			}
 
-			// Our content is avialble
+			// Our content is available
 			$this->vars['content'] = $content;
 
 		endif;
@@ -261,7 +244,7 @@ class Fizl extends CI_Controller {
 		$parser = new Lex_Parser();
 		$parser->scope_glue(':');
 
-		echo $parser->parse($template, $this->vars, array($this->parse, 'callback'), true);
+		$this->output->set_output($parser->parse($template, $this->vars, array($this->parse, 'callback'), true));
 	}
 
 }

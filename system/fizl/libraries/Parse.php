@@ -60,7 +60,6 @@ class Parse {
 		// ----------------------------
 		
 		$plugin_dirs = array(APPPATH.'plugins/', $this->CI->config->item('site_folder').'/plugins/');
-
 		// We can either have plugin folders or plugin files.
 		foreach ($plugin_dirs as $dir)
 		{		
